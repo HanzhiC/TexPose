@@ -1,0 +1,1 @@
+cat lm_test_all/test/000006 148

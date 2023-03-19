@@ -1,0 +1,121 @@
+_parent_: options/base.yaml
+
+group: Duck                                                    # name of experiment group
+c2f:
+    range:
+    start:
+
+arch:                                                       # architectural optionss
+    layers_feat: [null,256,256,256,256,256,256,256,256]     # hidden layers for feature/density MLP]
+    layers_rgb: [null,256,256,256,3]                         # hidden layers for color MLP]
+    layers_trans: [null,256,256,256,5]                      # hidden layers for trasient color and density MLP]
+    skip: [4]                                               # skip connections
+    posenc:                                                 # positional encoding:
+        L_3D: 10                                             # number of bases (3D point)
+        L_view: 4                                           # number of bases (viewpoint)
+    density_activ: softplus                                 # activation function for output volume density
+    tf_init: true                                           # initialize network weights in TensorFlow style
+
+nerf:                                                       # NeRF-specific options
+    view_dep: true                                          # condition MLP on viewpoint
+    depth:                                                  # depth-related options
+        param: metric                                       # depth parametrization (for sampling along the ray)
+        range: [0, 3]                                     # near/far bounds for depth sampling, measured in *meter* unit
+        scale: 10                                           # Transform to other metric (such as dm) for pose and depth,  which stored as m for default
+        range_source: 'box'
+        box_mask: false
+        box_source: 'pred_box_init_calib'
+    sample_intvs: 64                                        # number of samples
+    sample_stratified: true                                 # stratified sampling
+    fine_sampling: false                                    # hierarchical sampling with another NeRF
+    sample_intvs_fine:                                      # number of samples for the fine NeRF
+    rand_rays: 2048                                         # number of random rays for each step
+    ray_obj_ratio: 0.9                                     # number of rays sampled on CAD models
+    density_noise_reg:                                      # Gaussian noise on density output as regularization
+    setbg_opaq  ue:                                           # fill transparent rendering with known background color (Blender only)
+    mask_obj: True
+    N_latent: 32
+    N_latent_trans: 16
+    N_latent_light: 48
+    min_uncert: 0.05
+
+data:                                                       # data options
+    dataset: lm                                             # dataset name
+    object: duck                                             # object name
+    scene: scene_all                                     # scene name
+    image_size: [128,128]                                   # input image sizes [height,width]
+    num_workers: 4                                          # number of parallel workers for data loading
+    preload: true                                           # preload the entire dataset into the memory
+    bgcolor:                                                # background color (Blender only)
+    val_on_test: False
+    val_sub:
+    pose_source: predicted
+    pose_loop: init_calib
+    erode_mask: true
+    mask_visib_source: mask_pred_init                           # mask_pred_init
+    scene_info_source: predicted                                     # set gt for Glue and Eggbox for now gt | pred
+    box_format:                                             # hw | wh  # set wh for Glue and Eggbox for now
+    erode_mask_loss:
+    multi_obj:
+
+camera:                                                     # camera options
+    model: perspective                                      # type of camera model
+    ndc: false                                              # reparametrize as normalized device coordinates (NDC)
+
+loss_weight:                                                # loss weights (in log scale)
+    # nerf loss
+    render: 0                                               # RGB rendering loss
+    depth:
+    mask:
+    uncert: 0
+    trans_reg: -2
+    feat: -2
+    gan_nerf: -1
+    lab:
+    # discriminator loss
+    gan_disc_real: 0
+    gan_disc_fake: 0
+    gan_reg_real: 1
+    gan_reg_fake:
+
+gan:
+    type: 'standard'
+    scale_conditional: True
+    geo_conditional: True
+    geo_c2f:
+    L_nocs:
+    L_scale: 4
+    L_normal:
+
+optim:                                                      # optimization options
+    lr: 1.e-3                                               # learning rate (main)
+    lr_end: 1.e-4                                           # terminal learning rate (only used with sched.type=ExponentialLR)
+    algo: Adam                                              # optimizer (see PyTorch doc)
+    sched:                                                  # learning rate scheduling options
+        type: ExponentialLR                                 # scheduler (see PyTorch doc)
+        gamma: 0.9996163094458892                                             # decay rate (can be empty if lr_end were specified)
+
+optim_disc:                                                      # optimization options
+    lr: 1.e-4                                               # learning rate (main)
+    algo: RMSprop
+
+
+freq:                                                             # periodic actions during training
+    scalar: 100                                            # log losses and scalar states (every N steps)
+    vis: 500                                              # visualize results (every N steps)
+    val: 2000                                             # validate on val set (every N epochs)
+    ckpt: 5000                                            # save checkpoint (every N epochs)
+    print: 500                                            # print status (every N epochs)
+
+render:
+    N_candidate: 3
+    transient: zero                                     # zero | sample
+    # cat: 1, zero
+    save_path:
+    geo_save_dir:
+
+# Setting for patch16x16
+batch_size: 8                                               # batch size
+patch_size: 16                                              # patch size for sampling
+max_epoch: 6000                                             # train to maximum number of epochs
+syn2real:
