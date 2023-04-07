@@ -46,7 +46,9 @@ python3 evaluate.py --model=nerf_adapt_st_gan --yaml=nerf_lm_adapt_gan --batch_s
 
 ### Train texture learner
 ```bash
-python3 train.py --model=nerf_adapt_st_gan --yaml=nerf_lm_adapt_gan --data.pose_source=predicted --resume_pretrain --data.preload=true  --group Duck --data.object=duck --data.scene=scene_all --name=test_run3
+python3 train.py --model=nerf_adapt_st_gan --yaml=nerf_lm_adapt_gan --resume_pretrain \
+--data.pose_source=predicted --data.preload=true  --group Duck --data.object=duck \
+--data.scene=scene_all --name=test_run3
 ```
 
 ### Supervise pose estimator
