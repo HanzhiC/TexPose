@@ -132,4 +132,4 @@ dmypy.json
 # dara
 output/*
 dataset/*
-
+*.zip

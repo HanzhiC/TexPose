@@ -110,7 +110,6 @@ freq:                                                             # periodic act
 render:
     N_candidate: 3
     transient: zero                                     # zero | sample
-    # cat: 1, zero
     save_path:
     geo_save_dir:
 
