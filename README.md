@@ -6,6 +6,15 @@ Official repository for "TexPose: Neural Texture Learning for Self-Supervised 6D
 We re-formulate self-supervised pose estimation as two sub-optimization problems on texture learning and pose learning. 
 With this re-formulation, we can do effective self-training for object pose estimator without any supervision signals like depth or deep pose refiner requried in previous works.
 
+## Prerequisites
+1. Set up the environment with cond
+```bash
+conda env create --file requirements.yaml python=3.8
+conda activate texpose
+```
+
+2. Download PyTorch3D following the instruction [here](https://github.com/facebookresearch/pytorch3d/blob/main/INSTALL.md).
+
 ## Data Preparation
 We use **Duck** class (ID 9) from LineMOD as an example here:
 
