@@ -393,7 +393,7 @@ class Dataset(base.Dataset):
             pose_init_raw = torch.eye(4)
             pose_init_raw[:3, :3] = torch.from_numpy(np.array(rot).reshape(3, 3).astype(np.float32))
             pose_init_raw[:3, 3] = torch.from_numpy(np.array(tra).astype(np.float32)) / 1000  # scale in meter
-            pose_init = self.parse_raw_camera(opt, pose_init_raw) if idx != 0 else pose_gt
+            pose_init = self.parse_raw_camera(opt, pose_init_raw) 
         else:
             pose_init = pose_gt
 
