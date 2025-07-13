@@ -19,10 +19,10 @@ conda activate texpose
 We use **Duck** class (ID 9) from LineMOD as an example here:
 
 ### Download dataset and predicted pose labels after synthetic pretraining
-Download our pre-processed dataset from [here](https://1drv.ms/u/s!AsKJ8uQTZ3xog4lvNAXArr9m0B9-cQ?e=Zy1Fcr) 
+Download our pre-processed dataset from [here](https://1drv.ms/u/c/687c6713e4f289c2/QcKJ8uQTZ3wggGjvxAAAAAAANAXArr9m0B9-cQ) 
 
 ### Download pre-trained weights
-Download the pre-trained weights (pre-trained geometric branch and texture learner) from [here](https://1drv.ms/u/s!AsKJ8uQTZ3xog4lwxvR4Ol4YwlCnGw?e=kX66Nq) 
+Download the pre-trained weights (pre-trained geometric branch and texture learner) from [here](https://1drv.ms/u/c/687c6713e4f289c2/QcKJ8uQTZ3wggGjwxAAAAAAAxvR4Ol4YwlCnGw) 
 
 ### Compute box for ray sampling
 You can skip this step if you download our pre-processed dataset.
